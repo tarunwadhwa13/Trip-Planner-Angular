@@ -1,0 +1,150 @@
+<header>
+
+  <div class="container">
+    <div class="jumbotron">
+
+
+      <ngb-tabset type="pills" #t="ngbTabset" [justify]="center">
+
+        <!--  ONE WAY -->
+        <ngb-tab title="One Way" id="tab-oneWay">
+          <ng-template ngbTabContent>
+            <br/>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="search-ahead">Source:</label>
+                <input id="search-ahead" type="text" class="form-control" [(ngModel)]="source" [ngbTypeahead]="search" />
+              </div>
+              <div class="col-md-6">
+                <label for="search-ahead">Destination:</label>
+                <input id="search-ahead" type="text" class="form-control" [(ngModel)]="destination" [ngbTypeahead]="search" />
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+              <div class="col-md-6">
+                <ngb-datepicker #dp [(ngModel)]="fromDate" [minDate]=today></ngb-datepicker>
+              </div>
+
+
+
+              <div class="col-md-6 flex-center">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="fromDate"  ngbDatepicker #d="ngbDatepicker" [disabled]="true">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary"  type="button">
+                          <img src="../../../assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+
+
+            <hr/>
+            <form class="form-inline">
+              <div class="input-group mb-3">
+                <input type="number" class="form-control" min=0 placeholder="Passengers" aria-label="Passenger" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">people</span>
+                </div>
+              </div>
+
+            </form>
+
+          </ng-template>
+        </ngb-tab>
+
+        <!-- /.ONE WAY -->
+
+        <!-- RETURN -->
+        <ngb-tab id="tab-twoWay" title="Return">
+          <ng-template ngbTabContent>
+
+            <br/>
+            <div class="row">
+              <div class="col-md-6">
+                <label for="search-ahead">Source:</label>
+                <input id="search-ahead" type="text" class="form-control" [(ngModel)]="source" [ngbTypeahead]="search" />
+              </div>
+              <div class="col-md-6">
+                <label for="search-ahead">Destination:</label>
+                <input id="search-ahead" type="text" class="form-control" [(ngModel)]="destination" [ngbTypeahead]="search" />
+              </div>
+            </div>
+            <hr/>
+
+            <div class="row">
+              <div class="col-md-6">
+                <ngb-datepicker #dp ngModel (ngModelChange)="onDateChange($event)" [displayMonths]="1" [dayTemplate]="t" [minDate]=today>
+                </ngb-datepicker>
+<!-- NG datepicker Range based -->
+                <ng-template #t let-date="date" let-focused="focused">
+                  <span class="custom-day" [class.focused]="focused" [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
+                    [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                    {{ date.day }}
+                  </span>
+                </ng-template>
+              </div>
+              <div class="col-md-6">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="dp"  [(ngModel)]="fromDate" ngbDatepicker #d="ngbDatepicker" [disabled]="true">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">
+                          <img src="../../../assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+                <br/>
+
+                <form class="form-inline">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="dp"  [(ngModel)]="toDate" ngbDatepicker #d="ngbDatepicker" [disabled]="true">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">
+                          <img src="../../../assets/img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+
+            <hr>
+            <form class="form-inline">
+              <div class="input-group mb-3">
+                <input type="number" class="form-control" min=0 placeholder="Passengers" aria-label="Passenger" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">people</span>
+                </div>
+              </div>
+            </form>
+          </ng-template>
+        </ngb-tab>
+        <!-- /.RETURN -->
+      </ngb-tabset>
+     
+
+    </div>
+
+    <app-search [selected]="t.activeId || selected" [source]="source" [destination]="destination" [toDate]=parse(toDate) [fromDate]=parse(fromDate)></app-search>
+  </div>
+
+</header>
+

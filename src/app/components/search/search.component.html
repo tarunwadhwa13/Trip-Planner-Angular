@@ -1,0 +1,48 @@
+<div class="container">
+  
+  <div class="row">
+    <div class="col-md-6">
+      <label for="search-result">Source:</label>
+      <input id="search-result" type="text" class="form-control" [(ngModel)]="source" [disabled]="true"/>
+    </div>
+    <div class="col-md-6">
+      <label for="search-result">Destination:</label>
+      <input id="search-result" type="text" class="form-control" [(ngModel)]="destination" [disabled]="true"/>
+    </div>
+    <hr/>
+    
+  </div>
+
+  <div class="row" *ngIf="selected=='tab-oneWay';else return">
+    <div class="col-md-6">
+        <label for="Date">Date:</label>
+        <input id="Date" type="text" class="form-control" [(ngModel)]="fromDate" [disabled]="true"/>
+    </div>
+  </div>
+  <ng-template #return>
+      <div class="row">
+          <div class="col-md-6">
+              <label for="startDate">From:</label>
+              <input id="startDate" type="text" class="form-control" [(ngModel)]="fromDate" [disabled]="true"/>
+            </div>
+            <div class="col-md-6">
+              <label for="endDate">To:</label>
+              <input id="endDate" type="text" class="form-control" [(ngModel)]="toDate" [disabled]="true"/>
+            </div>
+      </div>
+
+  </ng-template>
+  
+  <button type="submit" class="btn btn-primary" (click)=getService()>Search</button>
+
+  <div *ngFor="let flights of flightsAvailable">
+    Got flights!!<br/>
+    source: {{flights.source}}<br/>
+    destination : {{flights.destination}}<br/>
+    Arrival : {{ flights.arrival_time}}<br/>
+    Will Reach at : {{ flights.departure_time}}<br/>
+    Cities Covered : {{ flights.cities }}<br/>
+    <hr/>
+  </div>
+
+</div>
